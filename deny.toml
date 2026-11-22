@@ -4,7 +4,17 @@ all-features = false
 [advisories]
 version = 2
 yanked = "deny"
-ignore = []
+ignore = [
+    # RUSTSEC-2026-0543 (2026-09-14): "chrono is unmaintained". The upstream
+    # project is archived and there is no patched release (patched = []), so no
+    # upgrade exists. Impact: informational only -- an "unmaintained" notice,
+    # not a vulnerability; no exploit exists. chrono reaches this crate
+    # transitively, through rmcp and schemars, so it cannot be swapped for the
+    # maintained `time` crate here without changing those crates first.
+    # Removal condition: drop this entry once no dependency pulls chrono in any
+    # more, or once chrono is replaced upstream by the maintained `time` crate.
+    "RUSTSEC-2026-0543",
+]
 
 [licenses]
 version = 2
